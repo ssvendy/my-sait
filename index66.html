@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>NIKKLES — История бренда</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #03060b;
+            color: #eef2ff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0f1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff4d4d;
+            border-radius: 10px;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        header {
+            background: rgba(3, 6, 11, 0.95);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 77, 77, 0.3);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff4d4d, #ff8c42);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #eef2ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            color: #ff4d4d;
+        }
+        .btn-outline-small {
+            border: 1px solid #ff4d4d;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: #ff4d4d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+            cursor: pointer;
+            background: transparent;
+        }
+        .btn-outline-small:hover {
+            background: #ff4d4d;
+            color: #000;
+        }
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            background: radial-gradient(circle at 20% 30%, #0a0f1a, #020408);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "NIKKLES";
+            font-size: 18vw;
+            font-weight: 900;
+            position: absolute;
+            bottom: -5vw;
+            left: -5vw;
+            opacity: 0.03;
+            pointer-events: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .hero-title {
+            font-size: 74px;
+            line-height: 1.05;
+            margin-bottom: 25px;
+        }
+        .hero-title span {
+            color: #ff4d4d;
+        }
+        .hero-desc {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #b0b8d0;
+            margin: 25px 0;
+            max-width: 90%;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 35px;
+        }
+        .stat {
+            text-align: left;
+        }
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            color: #ff8c42;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #9aa2bf;
+        }
+        .hero-img img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+        .hero-img img:hover {
+            transform: scale(1.02);
+        }
+
+        .section-header {
+            text-align: center;
+            margin: 80px 0 50px;
+        }
+        .section-header h2 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #ff4d4d;
+            border-radius: 3px;
+        }
+        .section-header p {
+            color: #ff8c42;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-top: 20px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin: 60px 0;
+        }
+        .about-text h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #ff8c42;
+        }
+        .about-text p {
+            line-height: 1.7;
+            color: #b0b8d0;
+            margin-bottom: 20px;
+        }
+        .about-img img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .mission-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px 0;
+        }
+        .mission-card {
+            background: #0f121e;
+            border-radius: 30px;
+            padding: 35px 25px;
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 77, 77, 0.1);
+        }
+        .mission-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff4d4d;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.4);
+        }
+        .mission-icon {
+            font-size: 60px;
+            color: #ff4d4d;
+            margin-bottom: 20px;
+        }
+        .mission-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .mission-card p {
+            color: #8d95b0;
+            line-height: 1.5;
+        }
+
+        .timeline {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px 0;
+        }
+        .timeline-item {
+            background: #0a0e18;
+            border-radius: 25px;
+            padding: 25px;
+            text-align: center;
+            width: 220px;
+            transition: 0.3s;
+        }
+        .timeline-item:hover {
+            transform: scale(1.05);
+            background: #ff4d4d20;
+        }
+        .year {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ff4d4d;
+        }
+        .event {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        .value-card {
+            background: #0f121e;
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .value-card:hover {
+            background: #ff4d4d10;
+            transform: translateY(-5px);
+        }
+        .value-icon {
+            font-size: 48px;
+            color: #ff8c42;
+            margin-bottom: 20px;
+        }
+        .value-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .value-card p {
+            color: #9aa2bf;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px;
+            margin: 50px 0 70px;
+        }
+        .team-card {
+            background: #0f121e;
+            border-radius: 35px;
+            padding: 25px;
+            text-align: center;
+            width: 260px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 77, 77, 0.2);
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: #ff4d4d;
+        }
+        .team-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid #ff4d4d;
+            display: block;
+        }
+        .team-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ff8c42;
+            margin-top: 10px;
+        }
+        .team-role {
+            color: #b0b8d0;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #ff4d4d20, #ff8c4220);
+            border-radius: 50px;
+            padding: 60px 40px;
+            margin: 60px 0;
+            text-align: center;
+            border: 1px solid rgba(255, 77, 77, 0.4);
+        }
+        .cta-section h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        .cta-section p {
+            color: #b0b8d0;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .btn-shop {
+            background: #ff4d4d;
+            color: #000;
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-shop:hover {
+            background: #ff6a2c;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 77, 77, 0.4);
+        }
+
+        footer {
+            background: #010101;
+            padding: 50px 0 25px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255,77,77,0.2);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+            gap: 40px;
+        }
+        .footer-col h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col li {
+            margin-bottom: 12px;
+        }
+        .footer-col a {
+            color: #9aa2bf;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer-col a:hover {
+            color: #ff4d4d;
+        }
+        .social-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            font-size: 24px;
+            color: #9aa2bf;
+            transition: 0.2s;
+        }
+        .social-links a:hover {
+            color: #ff4d4d;
+            transform: translateY(-3px);
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            color: #4c5168;
+            font-size: 14px;
+        }
+        .copyright a {
+            color: #ff8c42;
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-title {
+                font-size: 48px;
+            }
+            .hero-desc {
+                max-width: 100%;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .section-header h2 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">NIKKLES</div>
+            <ul class="nav-links">
+                <li><a href="#about">О бренде</a></li>
+                <li><a href="#mission">Миссия</a></li>
+                <li><a href="#history">История</a></li>
+                <li><a href="#team">Команда</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <button class="btn-outline-small shop-link-btn">Магазин</button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <h1 class="hero-title">NIKKLES —<br><span>революция</span> в мире трюков</h1>
+                <p class="hero-desc">Мы создаём самокаты, которые ломают стереотипы. Хромоль, карбон и инновации — всё для того, чтобы ты достиг новых высот.</p>
+                <div class="hero-stats">
+                    <div class="stat"><div class="stat-number">5+</div><div class="stat-label">лет лидерства</div></div>
+                    <div class="stat"><div class="stat-number">15k+</div><div class="stat-label">довольных райдеров</div></div>
+                    <div class="stat"><div class="stat-number">20+</div><div class="stat-label">профессиональных спортсменов</div></div>
+                </div>
+            </div>
+            <div class="hero-img">
+                <img src="https://avatars.mds.yandex.net/i?id=80447c0ee4bc2e9e0d3245bcdbc8bee5_l-5302022-images-thumbs&n=13" alt="NIKKLES Rider" onerror="this.src='https://placehold.co/600x500/1a1f2e/ff4d4d?text=NIKKLES'">
+            </div>
+        </div>
+    </section>
+
+    <div class="container" id="about">
+        <div class="about-grid">
+            <div class="about-text">
+                <h3>Кто мы?</h3>
+                <p>NIKKLES — это не просто бренд самокатов. Это сообщество людей, которые живут экстримом, драйвом и свободой. Мы начали свой путь в 2020 году с простой идеи: создать идеальный трюковой самокат, который будет одновременно лёгким, прочным и стильным.</p>
+                <p>Сегодня NIKKLES — это recognised бренд на международной арене, продукцией которого пользуются лучшие райдеры мира. Мы гордимся тем, что каждый наш самокат проходит строжайший контроль качества и тестируется профессионалами.</p>
+                <p>Мы верим, что границы существуют только в голове. NIKKLES помогает их стирать.</p>
+            </div>
+            <div class="about-img">
+                <img src="https://zefirka.club/wallpapers/uploads/posts/2023-04/1680545363_zefirka-club-p-oboi-dlya-samokaterov-na-telefon-4.jpg" alt="NIKKLES Team" onerror="this.src='https://placehold.co/500x400/1a1f2e/ff4d4d?text=NIKKLES+TEAM'">
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mission">
+        <div class="section-header">
+            <h2>Наша миссия</h2>
+            <p>Почему мы здесь</p>
+        </div>
+        <div class="mission-cards">
+            <div class="mission-card">
+                <div class="mission-icon"><i class="fas fa-bullseye"></i></div>
+                <h3>Качество превыше всего</h3>
+                <p>Используем только лучшие материалы: хромоль 4130, авиационный алюминий, карбон.</p>
+            </div>
+            <div class="mission-card">
+                <div class="mission-icon"><i class="fas fa-users"></i></div>
+                <h3>Сообщество райдеров</h3>
+                <p>Мы поддерживаем скейт-парки, проводим соревнования и растем вместе с нашими клиентами.</p>
+            </div>
+            <div class="mission-card">
+                <div class="mission-icon"><i class="fas fa-lightbulb"></i></div>
+                <h3>Инновации</h3>
+                <p>Постоянно улучшаем геометрию и технологии, чтобы ты мог выполнять сложнейшие трюки.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="history">
+        <div class="section-header">
+            <h2>История NIKKLES</h2>
+            <p>Путь к совершенству</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item"><div class="year">2020</div><div class="event">Основание бренда</div></div>
+            <div class="timeline-item"><div class="year">2021</div><div class="event">Первый флагманский самокат PRO</div></div>
+            <div class="timeline-item"><div class="year">2022</div><div class="event">Выход на международный рынок</div></div>
+            <div class="timeline-item"><div class="year">2023</div><div class="event">Открытие команды PRO-райдеров</div></div>
+            <div class="timeline-item"><div class="year">2024</div><div class="event">Запуск линии TECH TEAM</div></div>
+            <div class="timeline-item"><div class="year">2025</div><div class="event">Новая эра — карбоновая серия</div></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-header">
+            <h2>Наши ценности</h2>
+            <p>Что движет нами</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card"><div class="value-icon"><i class="fas fa-dumbbell"></i></div><h3>Прочность</h3><p>Наши самокаты выдерживают самые жесткие нагрузки.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-feather-alt"></i></div><h3>Лёгкость</h3><p>Идеальный вес для выполнения любых трюков.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-palette"></i></div><h3>Стиль</h3><p>Дизайн, который выделяет тебя из толпы.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-handshake"></i></div><h3>Надёжность</h3><p>Гарантия на всю продукцию и сервисная поддержка.</p></div>
+        </div>
+    </div>
+
+    <div class="container" id="team">
+        <div class="section-header">
+            <h2>Лица NIKKLES</h2>
+            <p>Наша команда профессионалов</p>
+        </div>
+        <div class="team-grid" id="teamGrid"></div>
+    </div>
+
+    <div class="container">
+        <div class="cta-section">
+            <h2>Присоединяйся к семье NIKKLES</h2>
+            <p>Стань частью сообщества, которое меняет представление о трюковых самокатах.</p>
+            <button class="btn-shop shop-link-btn">Перейти в магазин</button>
+        </div>
+    </div>
+</main>
+
+<footer id="contact">
+    <div class="container footer-grid">
+        <div class="footer-col">
+            <h4>NIKKLES</h4>
+            <ul>
+                <li><a href="#about">О бренде</a></li>
+                <li><a href="#mission">Миссия</a></li>
+                <li><a href="#history">История</a></li>
+                <li><a href="#team">Команда</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Продукция</h4>
+            <ul>
+                <li><a href="#" class="shop-link-btn">Самокаты NIKKLES</a></li>
+                <li><a href="#" class="shop-link-btn">TECH TEAM серия</a></li>
+                <li><a href="#" class="shop-link-btn">Запчасти</a></li>
+                <li><a href="#" class="shop-link-btn">Аксессуары</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Контакты</h4>
+            <ul>
+                <li><i class="fas fa-envelope"></i> <a href="mailto:Bella104423315@gmail.com">Bella104423315@gmail.com</a></li>
+                <li><i class="fas fa-phone-alt"></i> <a href="tel:+79105416424">8-910-541-64-24</a></li>
+                <li><i class="fas fa-clock"></i> Ежедневно 10:00–21:00</li>
+            </ul>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2025 NIKKLES — Трюковые самокаты будущего. Все права защищены. <br>
+        Почта: <a href="mailto:Bella104423315@gmail.com">Bella104423315@gmail.com</a> | Тел: <a href="tel:+79105416424">8-910-541-64-24</a>
+    </div>
+</footer>
+
+<script>
+    // Команда с фотографиями
+    const teamMembers = [
+        { name: "Матвей Кислов", role: "Про райдер / Основатель", photo: "https://avatars.mds.yandex.net/i?id=2a0000017a0e99aef68465490efed8c02d0d-4614390-images-thumbs&n=13" },
+        { name: "Иотченко Александр", role: "Капитан команды", photo: "https://avatars.mds.yandex.net/get-entity_search/10844871/1261413825/S600xU_2x" },
+        { name: "Степан Сушков", role: "Парковый райдер", photo: "https://avatars.mds.yandex.net/get-entity_search/5394633/1237504509/S600xU_2x" },
+        { name: "Дмитрий Макарович", role: "Тренер / Наставник", photo: "https://avatars.mds.yandex.net/get-entity_search/137430/1262209346/S600xU_2x" }
+    ];
+
+    function renderTeam() {
+        const container = document.getElementById("teamGrid");
+        if (container) {
+            container.innerHTML = teamMembers.map(m => `
+                <div class="team-card">
+                    <img class="team-photo" src="${m.photo}" alt="${m.name}" onerror="this.src='https://placehold.co/160x160/1a1f2e/ff4d4d?text=${m.name.charAt(0)}'">
+                    <div class="team-name">${m.name}</div>
+                    <div class="team-role">${m.role}</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    // Функция для открытия магазина (файла index67.html) в новой вкладке
+    function openShop() {
+        // Путь к вашему файлу магазина
+        const shopUrl = "file:///C:/Users/user/Desktop/index67.html";
+        
+        // Открываем в новой вкладке
+        window.open(shopUrl, '_blank');
+        
+        // Если браузер блокирует file://, показываем подсказку
+        setTimeout(() => {
+            // Небольшая проверка (не сработает если окно открылось)
+            console.log("Попытка открыть магазин: " + shopUrl);
+        }, 100);
+    }
+
+    // Назначаем обработчики на все кнопки "Магазин"
+    function initShopButtons() {
+        const shopButtons = document.querySelectorAll('.shop-link-btn');
+        shopButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openShop();
+            });
+        });
+    }
+
+    renderTeam();
+    initShopButtons();
+</script>
+</body>
+</html>
