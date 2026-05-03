@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>NIKKLES — Трюковые самокаты</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        body { font-family: 'Inter', sans-serif; background: #03060b; color: #eef2ff; overflow-x: hidden; scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0f1a; }
+        ::-webkit-scrollbar-thumb { background: #ff4d4d; border-radius: 10px; }
+        h1, h2, h3, .logo { font-family: 'Montserrat', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 25px; }
+        header { background: rgba(3,6,11,0.96); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #ff4d4d40; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; flex-wrap: wrap; gap: 15px; }
+        .logo { font-size: 32px; background: linear-gradient(135deg, #ff4d4d, #ff8c42); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .nav-links { display: flex; gap: 35px; list-style: none; flex-wrap: wrap; align-items: center; }
+        .nav-links a { color: #eef2ff; text-decoration: none; font-weight: 600; transition: 0.3s; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active { color: #ff4d4d; }
+        .game-mini-btn { background: #ff4d4d; color: #000; padding: 8px 20px; border-radius: 40px; font-weight: bold; cursor: pointer; transition: 0.2s; border: none; font-size: 14px; }
+        .game-mini-btn:hover { background: #ff6a2c; transform: scale(1.02); }
+        .cart-icon { background: #1e1f2c; padding: 8px 18px; border-radius: 40px; display: flex; gap: 10px; align-items: center; cursor: pointer; transition: 0.3s; }
+        .cart-icon:hover { background: #ff4d4d; color: #000; }
+        .hero { min-height: 85vh; display: flex; align-items: center; background: radial-gradient(circle at 80% 20%, #0e1320, #020408); }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .hero-title { font-size: 62px; line-height: 1.1; }
+        .hero-title span { color: #ff4d4d; }
+        .hero-desc { color: #b0b8d0; margin: 25px 0; font-size: 18px; }
+        .btn { padding: 14px 34px; font-weight: 700; border-radius: 60px; text-decoration: none; display: inline-block; transition: 0.2s; cursor: pointer; border: none; font-size: 16px; }
+        .btn-primary { background: #ff4d4d; color: #000; box-shadow: 0 8px 20px #ff4d4d40; }
+        .btn-primary:hover { background: #ff6a2c; transform: translateY(-3px); }
+        .btn-outline { border: 2px solid #ff4d4d; color: #ff4d4d; background: transparent; }
+        .history-btn { background: transparent; border: 2px solid #ff8c42; color: #ff8c42; }
+        .history-btn:hover { background: #ff8c42; color: #000; transform: translateY(-2px); }
+        .hero-img img { width: 100%; max-width: 500px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        
+        .game-container { margin-top: 20px; background: #0a0e18; border-radius: 30px; padding: 15px; border: 1px solid #ff4d4d40; }
+        .game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
+        .game-score { font-size: 24px; font-weight: 800; color: #ff8c42; }
+        .game-status { font-size: 14px; color: #b0b8d0; }
+        .game-canvas-wrapper { background: #03060b; border-radius: 20px; overflow: hidden; }
+        canvas { display: block; width: 100%; height: auto; background: #0f121e; cursor: pointer; }
+        .game-controls { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+        .game-btn { background: #ff4d4d; border: none; padding: 8px 20px; border-radius: 40px; font-weight: bold; cursor: pointer; color: #000; }
+        .game-btn:hover { background: #ff6a2c; }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin: 40px 0; }
+        .product-card { background: #0f121e; border-radius: 25px; padding: 18px; border: 1px solid #ff4d4d20; transition: 0.3s; cursor: pointer; }
+        .product-card:hover { transform: translateY(-5px); border-color: #ff4d4d; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .product-img-wrapper { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; background: #0a0e18; border-radius: 15px; }
+        .product-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .product-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+        .product-desc { color: #8d95b0; font-size: 12px; margin-bottom: 12px; min-height: 40px; line-height: 1.4; }
+        .price-row { display: flex; justify-content: space-between; align-items: baseline; margin: 12px 0; }
+        .price { font-size: 24px; font-weight: 800; color: #ff4d4d; }
+        .old-price { font-size: 13px; text-decoration: line-through; color: #6a6f87; }
+        .buy-btn { background: none; border: 1px solid #ff4d4d; padding: 8px; border-radius: 40px; color: #ff4d4d; font-weight: bold; cursor: pointer; width: 100%; transition: 0.2s; font-size: 14px; }
+        .buy-btn:hover { background: #ff4d4d; color: #000; }
+        
+        .product-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000ee; backdrop-filter: blur(8px); z-index: 1001; justify-content: center; align-items: center; }
+        .product-modal-content { background: #0f121e; border-radius: 40px; max-width: 500px; width: 90%; padding: 25px; border: 1px solid #ff4d4d; position: relative; }
+        .close-product-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #ff4d4d; background: none; border: none; }
+        .close-product-modal:hover { color: #ff8c42; }
+        .product-modal-img { width: 100%; height: 250px; object-fit: contain; margin-bottom: 20px; background: #0a0e18; border-radius: 20px; }
+        .product-modal-title { font-size: 28px; font-weight: 800; margin-bottom: 10px; color: #ff8c42; }
+        .product-modal-desc { color: #b0b8d0; margin-bottom: 15px; line-height: 1.5; }
+        .product-modal-price { font-size: 32px; font-weight: 800; color: #ff4d4d; margin-bottom: 5px; }
+        .product-modal-old-price { font-size: 18px; text-decoration: line-through; color: #6a6f87; margin-bottom: 20px; }
+        .product-modal-buy { background: #ff4d4d; border: none; padding: 14px; border-radius: 40px; color: #000; font-weight: bold; cursor: pointer; width: 100%; font-size: 18px; transition: 0.2s; }
+        .product-modal-buy:hover { background: #ff6a2c; }
+        
+        .section-header { text-align: center; margin: 40px 0 30px; }
+        .section-header h2 { font-size: 38px; margin-bottom: 8px; }
+        .section-header p { color: #ff8c42; font-weight: 600; letter-spacing: 1px; font-size: 14px; }
+        .contact-banner { background: linear-gradient(135deg, #ff4d4d20, #ff8c4220); border-radius: 40px; padding: 30px; margin: 40px 0; text-align: center; border: 1px solid #ff4d4d60; }
+        .contact-info-row { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; align-items: center; }
+        .contact-info-row div { background: #0f121e; padding: 12px 28px; border-radius: 60px; display: flex; gap: 12px; align-items: center; }
+        .contact-info-row a { color: white; text-decoration: none; }
+        .features-showcase { background: #0a0e18; border-radius: 50px; padding: 50px 30px; margin: 50px 0; }
+        .features-flex { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; text-align: center; }
+        .feature-item i { font-size: 50px; color: #ff4d4d; margin-bottom: 15px; }
+        .payment-methods { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin: 30px 0; }
+        .payment-item { background: #0f121e; padding: 15px 25px; border-radius: 50px; text-align: center; min-width: 110px; }
+        .payment-item i { font-size: 40px; color: #ff8c42; }
+        .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; margin: 40px 0; }
+        .team-card { background: #0f121e; border-radius: 40px; padding: 25px 20px; text-align: center; width: 260px; border: 1px solid #ff4d4d30; transition: 0.3s; }
+        .team-card:hover { border-color: #ff4d4d; transform: translateY(-5px); }
+        .team-photo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px; border: 3px solid #ff4d4d; display: block; background: #1a1f2e; }
+        .team-name { font-size: 22px; font-weight: 800; color: #ff8c42; margin-top: 10px; }
+        .team-role { color: #b0b8d0; font-size: 14px; margin-top: 5px; }
+        .testimonials { background: #080c14; border-radius: 40px; padding: 40px 30px; margin: 50px 0; }
+        .slider { display: flex; overflow-x: auto; gap: 25px; padding-bottom: 15px; }
+        .testimonial { min-width: 300px; background: #111622; padding: 25px; border-radius: 28px; }
+        footer { background: #010101; padding: 40px 0 25px; margin-top: 50px; border-top: 1px solid #ff4d4d30; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 40px; }
+        .footer-col h4 { margin-bottom: 20px; font-size: 18px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; font-size: 14px; }
+        .footer-col a { color: #9aa2bf; text-decoration: none; }
+        .footer-col a:hover { color: #ff4d4d; }
+        .copyright { text-align: center; margin-top: 40px; color: #4c5168; font-size: 13px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000dd; backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: #0f121e; padding: 25px; border-radius: 35px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; }
+        .close-modal { background: #ff4d4d; border: none; padding: 12px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.2s; }
+        .close-modal:hover { background: #ff6a2c; }
+        .payment-form { margin-top: 20px; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 6px; color: #b0b8d0; font-size: 13px; }
+        .form-group input { width: 100%; padding: 12px 15px; border-radius: 30px; background: #1a1f2e; border: 1px solid #333; color: white; outline: none; font-size: 14px; transition: 0.2s; }
+        .form-group input:focus { border-color: #ff4d4d; }
+        .card-row { display: flex; gap: 12px; }
+        .pay-btn { background: #ff4d4d; color: #000; border: none; padding: 14px; border-radius: 40px; font-weight: bold; font-size: 18px; cursor: pointer; width: 100%; margin-top: 15px; transition: 0.2s; }
+        .pay-btn:hover { background: #ff6a2c; transform: translateY(-2px); }
+        .tab-buttons { display: flex; justify-content: center; gap: 15px; margin: 30px 0 20px; flex-wrap: wrap; }
+        .tab-btn { background: #1a1f2e; border: none; padding: 10px 25px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 14px; }
+        .tab-btn.active { background: #ff4d4d; color: #000; }
+        .section-category { display: none; }
+        .section-category.active-cat { display: block; }
+        .email-btn { background: #ff8c42; color: #000; border: none; padding: 10px 22px; border-radius: 40px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; transition: 0.2s; }
+        .email-btn:hover { background: #ffa75c; transform: translateY(-2px); }
+        .phone-link { cursor: pointer; }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #1a1f2e; padding: 10px 12px; border-radius: 20px; }
+        .cart-item-info { flex: 2; }
+        .cart-item-title { font-weight: 600; font-size: 14px; }
+        .cart-item-price { font-size: 13px; color: #ff8c42; }
+        .cart-item-controls { display: flex; align-items: center; gap: 10px; }
+        .cart-item-qty-btn { background: #ff4d4d; border: none; width: 28px; height: 28px; border-radius: 50%; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .cart-item-qty-btn:hover { background: #ff6a2c; transform: scale(1.05); }
+        .cart-item-qty { font-weight: 600; min-width: 30px; text-align: center; }
+        .cart-item-total { min-width: 80px; text-align: right; font-weight: 600; color: #ff4d4d; }
+        .remove-item-btn { background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 18px; margin-left: 8px; transition: 0.2s; }
+        .remove-item-btn:hover { color: #ff8c42; transform: scale(1.1); }
+        
+        @media (max-width: 800px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-title { font-size: 42px; }
+            .navbar { flex-direction: column; }
+            .product-img-wrapper { height: 170px; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+            .cart-item { flex-wrap: wrap; gap: 8px; }
+            .cart-item-total { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">NIKKLES</div>
+            <ul class="nav-links">
+                <li><a class="nav-cat" data-cat="scooters">Самокаты</a></li>
+                <li><a class="nav-cat" data-cat="parts">Запчасти</a></li>
+                <li><a class="nav-cat" data-cat="team">Команда</a></li>
+                <li><button class="game-mini-btn" id="gameTabBtn"><i class="fas fa-gamepad"></i> ИГРА</button></li>
+            </ul>
+            <div class="cart-icon" id="cartBtn"><i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span></div>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-text">
+            <h1 class="hero-title">Революция <span>трюков</span><br>NIKKLES</h1>
+            <p class="hero-desc">Самокаты NIKKLES и TECH TEAM. Хромоль, карбон, максимальный контроль.</p>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="heroScootersBtn">Смотреть самокаты</button>
+                <button class="btn btn-outline" id="heroPartsBtn">Запчасти</button>
+                <button class="btn btn-outline" id="writeEmailBtn"><i class="fas fa-envelope"></i> Написать письмо</button>
+                <button class="btn btn-outline history-btn" id="historyBtn"><i class="fas fa-book-open"></i> История бренда</button>
+            </div>
+        </div>
+        <div class="hero-img">
+            <img src="https://avatars.mds.yandex.net/i?id=80447c0ee4bc2e9e0d3245bcdbc8bee5_l-5302022-images-thumbs&n=13" alt="NIKKLES Rider" onerror="this.src='https://placehold.co/500x500/1a1f2e/ff4d4d?text=NIKKLES'">
+        </div>
+    </div>
+</section>
+
+<div class="container" id="gameSection" style="display: none;">
+    <div class="game-container">
+        <div class="game-header">
+            <div class="game-score">🎮 СЧЕТ: <span id="gameScore">0</span> / 100</div>
+            <div class="game-status" id="gameStatus">🏁 Нажми СТАРТ, чтобы играть!</div>
+        </div>
+        <div class="game-canvas-wrapper">
+            <canvas id="gameCanvas" width="800" height="300" style="width:100%; height:auto; max-width:800px; margin:0 auto; display:block;"></canvas>
+        </div>
+        <div class="game-controls">
+            <button class="game-btn" id="startGameBtn">🚀 СТАРТ</button>
+            <button class="game-btn" id="restartGameBtn">🔄 ЗАНОВО</button>
+        </div>
+        <div style="text-align: center; margin-top: 12px; font-size: 12px; color: #888;">
+            💡 Управление: <strong>ПРОБЕЛ</strong> на ПК | <strong>ТАП ПО ЭКРАНУ</strong> на телефоне
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="contact-banner">
+        <h3><i class="fas fa-headset"></i> Связь с нами</h3>
+        <div class="contact-info-row">
+            <div><i class="fas fa-envelope"></i> <a href="mailto:Bella104423315@gmail.com">Bella104423315@gmail.com</a></div>
+            <div><i class="fas fa-phone-alt"></i> <a href="#" class="phone-link" id="phoneLink">8-910-541-64-24</a></div>
+            <button class="email-btn" id="emailBannerBtn"><i class="fas fa-paper-plane"></i> Написать письмо</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="scooters-tab">🛴 САМОКАТЫ</button>
+        <button class="tab-btn" data-tab="parts-tab">🔧 ЗАПЧАСТИ</button>
+        <button class="tab-btn" data-tab="team-tab">👥 КОМАНДА</button>
+    </div>
+
+    <div id="scooters-tab" class="section-category active-cat">
+        <div class="section-header"><p>🔥 TOP SALE 🔥</p><h2>Самокаты NIKKLES</h2></div>
+        <div class="products-grid" id="nikklesGrid"></div>
+        <div class="section-header"><p>⚡ PRO SERIES ⚡</p><h2>Самокаты TECH TEAM</h2></div>
+        <div class="products-grid" id="techteamGrid"></div>
+    </div>
+
+    <div id="parts-tab" class="section-category">
+        <div class="section-header"><p>🔩 АПГРЕЙД СВОЕГО САМОКАТА</p><h2>Оригинальные запчасти NIKKLES</h2></div>
+        <div class="products-grid" id="partsGrid"></div>
+    </div>
+
+    <div id="team-tab" class="section-category">
+        <div class="section-header"><p>⭐ ПРО РАЙДЕРЫ ⭐</p><h2>Наша команда</h2></div>
+        <div class="team-grid" id="teamGrid"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="features-showcase">
+        <div class="section-header"><h2>Создан для хард-трюков</h2></div>
+        <div class="features-flex">
+            <div class="feature-item"><i class="fas fa-weight-hanging"></i><h4>1.9 кг</h4><p>лёгкая дека</p></div>
+            <div class="feature-item"><i class="fas fa-shield-alt"></i><h4>Хромли 4130</h4><p>полный хромоль</p></div>
+            <div class="feature-item"><i class="fas fa-bolt"></i><h4>ABEC 9</h4><p>подшипники</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="section-header"><h2>💳 Принимаем к оплате</h2></div>
+    <div class="payment-methods">
+        <div class="payment-item"><i class="fab fa-cc-visa"></i><span>Visa</span></div>
+        <div class="payment-item"><i class="fab fa-cc-mastercard"></i><span>Mastercard</span></div>
+        <div class="payment-item"><i class="fab fa-cc-mir"></i><span>МИР</span></div>
+        <div class="payment-item"><i class="fas fa-money-bill-wave"></i><span>Наличные</span></div>
+        <div class="payment-item"><i class="fas fa-mobile-alt"></i><span>SBP</span></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="testimonials">
+        <div class="section-header"><h2><i class="fas fa-quote-left"></i> Отзывы</h2></div>
+        <div class="slider" id="testimonialsSlider"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="container footer-grid">
+        <div class="footer-col"><h4>NIKKLES</h4><ul><li>О бренде</li><li>Гарантия</li><li>Доставка</li></ul></div>
+        <div class="footer-col"><h4>Оплата</h4><ul><li>Visa/Mastercard/МИР</li><li>Наличные курьеру</li><li>Криптовалюта</li></ul></div>
+        <div class="footer-col"><h4>Контакты</h4><ul><li><a href="mailto:Bella104423315@gmail.com">Bella104423315@gmail.com</a></li><li><a href="#" class="phone-link" id="footerPhoneLink">8-910-541-64-24</a></li><li>10:00-21:00</li></ul></div>
+    </div>
+    <div class="copyright">© 2025 NIKKLES — Трюковые самокаты. Почта: <a href="mailto:Bella104423315@gmail.com">Bella104423315@gmail.com</a> | Тел: <a href="#" class="phone-link" id="copyrightPhoneLink">8-910-541-64-24</a></div>
+</footer>
+
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <h3>🛒 Корзина</h3>
+        <div id="cartList">Корзина пуста</div>
+        <div id="paymentArea" style="display:none;">
+            <div class="payment-form">
+                <h4>💳 Данные карты для оплаты</h4>
+                <div class="form-group"><label>Номер карты</label><input type="text" id="cardNum" placeholder="0000 0000 0000 0000" maxlength="19"></div>
+                <div class="card-row">
+                    <div class="form-group"><label>Срок (MM/YY)</label><input type="text" id="cardExp" placeholder="MM/YY" maxlength="5"></div>
+                    <div class="form-group"><label>CVV</label><input type="password" id="cardCvv" placeholder="XXX" maxlength="3"></div>
+                </div>
+                <div class="form-group"><label>Имя держателя</label><input type="text" id="cardName" placeholder="IVAN IVANOV"></div>
+                <div class="form-group"><label>Email для чека</label><input type="email" id="userEmail" placeholder="your@email.com"></div>
+                <button class="pay-btn" id="doPayBtn">Оплатить</button>
+                <button class="close-modal" id="backToCart" style="background:#333;">← Назад</button>
+            </div>
+        </div>
+        <button class="close-modal" id="closeCartBtn">Закрыть</button>
+    </div>
+</div>
+
+<div id="productModal" class="product-modal">
+    <div class="product-modal-content">
+        <button class="close-product-modal" id="closeProductModalBtn">&times;</button>
+        <img id="productModalImg" class="product-modal-img" src="" alt="">
+        <h2 id="productModalTitle" class="product-modal-title"></h2>
+        <p id="productModalDesc" class="product-modal-desc"></p>
+        <div id="productModalPrice" class="product-modal-price"></div>
+        <div id="productModalOldPrice" class="product-modal-old-price"></div>
+        <button id="productModalBuyBtn" class="product-modal-buy">Добавить в корзину</button>
+    </div>
+</div>
+
+<script>
+    // ===== ТОВАРЫ =====
+    const nikklesScoots = [
+        { id: 1, name: "NIKKLES STREET V2", price: 27900, old: 34900, desc: "Дека 5″, компрессия SCS, гринды. Профессиональный трюковой самокат для улицы.", img: "https://ir.ozone.ru/s3/multimedia-d/6008770045.jpg" },
+        { id: 2, name: "NIKKLES PRO CARBON", price: 49900, old: 62900, desc: "Карбоновая дека, вес 1.7кг. Максимальная лёгкость и прочность.", img: "https://elektro-mall.ru/image/catalog/1.2trykovie/samokati/ethic/ethic-dtc-erawan-v1/brushed-gray/ethic-dtc-erawan-gray-02-08-2023-gmdv%281%29.png" },
+        { id: 3, name: "NIKKLES PARK KILLER", price: 32900, old: 39900, desc: "Геометрия для вертушек, 120мм колеса. Идеален для парка.", img: "https://avatars.mds.yandex.net/get-goods_pic/9765111/hatc14ae7dfa1ce869c662d71ef97162de1/orig" }
+    ];
+    const techTeamScoots = [
+        { id: 101, name: "TECH TEAM PRO V1", price: 35900, old: 42900, desc: "Полный хромоль, усиленная дека. Надёжность и контроль.", img: "https://activlife.by/image/catalog/description/vP4kRGs8EVk.jpg" },
+        { id: 102, name: "TECH TEAM CARBON X", price: 55900, old: 69900, desc: "Карбон, титановый руль. Топовая модель для профессионалов.", img: "https://img2.festima.ru/1/WzBtbvC0XIrVnDb1a" },
+        { id: 103, name: "TECH TEAM STREET", price: 24900, old: 29900, desc: "Лёгкий стрит-самокат. Отличный выбор для городского катания.", img: "https://cdn.velostrana.ru/upload/models/samokat/32001/v-tech-03.jpg" }
+    ];
+    // ← Запчасти с обновленными фотографиями
+    const partsList = [
+        { id: 201, name: "Руль NIKKLES PRO", price: 8900, old: 11900, desc: "Хромоль 680мм. Широкий и надёжный руль.", img: "https://avatars.mds.yandex.net/get-goods_pic/11592219/hate844bdc1da9e8c02fde8e47be7036896/orig" },
+        { id: 202, name: "Колеса 120mm", price: 4900, old: 6900, desc: "Полиуретан 88A. Быстрые и износостойкие.", img: "https://main-cdn.sbermegamarket.ru/big2/hlr-system/128/477/757/111/219/36/600013996195b2.jpeg" },
+        { id: 203, name: "Грипсы NIKKLES", price: 1200, old: 1900, desc: "Набор 2шт. Противоскользящие, удобные.", img: "https://688516.selcdn.ru/Pics/173496/conversions/Grips-Ethic-DTC-Slim-Purple-Mix-offer_video_thumb_mcnv_740.jpg" },
+        { id: 204, name: "Подшипники ABEC 9", price: 2500, old: 3900, desc: "8 штук. Высокоскоростные подшипники.", img: "https://avatars.mds.yandex.net/get-mpic/4446555/2a00000191393a212a345a7128a46b2a5b19/orig" },
+        { id: 205, name: "Тормоз NIKKLES", price: 1800, old: 2900, desc: "Надежный тормоз для трюков.", img: "https://avatars.mds.yandex.net/get-mpic/11778691/2a0000018b724a9f40e2ac91dc31b41a4fb5/9hq" },
+        { id: 206, name: "Дека NIKKLES 5″", price: 12900, old: 16900, desc: "Хромоль, гриндер. Широкая дека для устойчивости.", img: "https://rideaction.ru/upload/iblock/f8c/y02tymtgec9frk8cmcwgda2397yham9f.jpg" }
+    ];
+    
+    let allProducts = [...nikklesScoots, ...techTeamScoots, ...partsList];
+    let cart = [];
+    let gameDiscountActive = false;
+    let firstOrderDiscountUsed = false;
+    let currentProduct = null;
+    
+    function renderGrid(gridId, items) {
+        const container = document.getElementById(gridId);
+        if(!container) return;
+        container.innerHTML = items.map(p => `
+            <div class="product-card" data-id="${p.id}">
+                <div class="product-img-wrapper">
+                    <img class="product-img" src="${p.img}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div style='font-size:70px; text-align:center;'>🛴</div>'">
+                </div>
+                <h3 class="product-title">${p.name}</h3>
+                <p class="product-desc">${p.desc.substring(0, 60)}${p.desc.length > 60 ? '...' : ''}</p>
+                <div class="price-row"><span class="price">₽ ${p.price.toLocaleString()}</span><span class="old-price">₽ ${p.old.toLocaleString()}</span></div>
+                <button class="buy-btn" data-id="${p.id}">В корзину</button>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if(e.target.classList.contains('buy-btn')) return;
+                const id = parseInt(card.dataset.id);
+                const product = allProducts.find(p => p.id === id);
+                if(product) showProductModal(product);
+            });
+        });
+        
+        attachBuyEvents();
+    }
+    
+    function showProductModal(product) {
+        currentProduct = product;
+        const modalImg = document.getElementById('productModalImg');
+        modalImg.src = product.img || '';
+        modalImg.style.display = 'block';
+        document.getElementById('productModalTitle').innerText = product.name;
+        document.getElementById('productModalDesc').innerText = product.desc;
+        document.getElementById('productModalPrice').innerHTML = `₽ ${product.price.toLocaleString()}`;
+        document.getElementById('productModalOldPrice').innerHTML = `Старая цена: ₽ ${product.old.toLocaleString()}`;
+        document.getElementById('productModal').style.display = 'flex';
+    }
+    
+    function attachBuyEvents() {
+        document.querySelectorAll('.buy-btn').forEach(btn => {
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.dataset.id);
+                let product = allProducts.find(p => p.id === id);
+                if(product) {
+                    addToCart(product);
+                    showNotif(`✅ ${product.name} добавлен`);
+                }
+            };
+        });
+    }
+    
+    function addToCart(product) {
+        const existing = cart.find(item => item.product.id === product.id);
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({ product: product, quantity: 1 });
+        }
+        updateCartDisplay();
+    }
+    
+    function changeQuantity(productId, delta) {
+        const index = cart.findIndex(item => item.product.id === productId);
+        if (index !== -1) {
+            const newQuantity = cart[index].quantity + delta;
+            if (newQuantity <= 0) {
+                cart.splice(index, 1);
+            } else {
+                cart[index].quantity = newQuantity;
+            }
+            updateCartDisplay();
+        }
+    }
+    
+    function removeItem(productId) {
+        cart = cart.filter(item => item.product.id !== productId);
+        updateCartDisplay();
+    }
+    
+    function updateCartDisplay() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById("cartCount").innerText = totalItems;
+        
+        const cartDiv = document.getElementById("cartList");
+        if (cartDiv && document.getElementById("paymentArea").style.display !== "block") {
+            if (cart.length === 0) {
+                cartDiv.innerHTML = "Корзина пуста";
+            } else {
+                let subtotal = 0;
+                let itemsHtml = '';
+                
+                cart.forEach(item => {
+                    const itemTotal = item.product.price * item.quantity;
+                    subtotal += itemTotal;
+                    itemsHtml += `
+                        <div class="cart-item" data-id="${item.product.id}">
+                            <div class="cart-item-info">
+                                <div class="cart-item-title">${item.product.name}</div>
+                                <div class="cart-item-price">₽ ${item.product.price.toLocaleString()} / шт</div>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="cart-item-qty-btn" data-id="${item.product.id}" data-delta="-1">−</button>
+                                <span class="cart-item-qty">${item.quantity}</span>
+                                <button class="cart-item-qty-btn" data-id="${item.product.id}" data-delta="1">+</button>
+                                <button class="remove-item-btn" data-id="${item.product.id}">✖</button>
+                            </div>
+                            <div class="cart-item-total">₽ ${itemTotal.toLocaleString()}</div>
+                        </div>
+                    `;
+                });
+                
+                let finalTotal = subtotal;
+                let discountText = "";
+                
+                if (gameDiscountActive && !firstOrderDiscountUsed) {
+                    finalTotal = Math.floor(subtotal * 0.85);
+                    discountText = `<div style="background:#ff4d4d20; padding:10px; border-radius:15px; margin:10px 0; text-align:center;">
+                                        🎮 <strong>СКИДКА 15% ЗА ПРОХОЖДЕНИЕ ИГРЫ!</strong> 🎮<br>
+                                        Было: ₽ ${subtotal.toLocaleString()} → К оплате: ₽ ${finalTotal.toLocaleString()}
+                                    </div>`;
+                } else if (!firstOrderDiscountUsed && !gameDiscountActive) {
+                    finalTotal = Math.floor(subtotal * 0.95);
+                    discountText = `<div style="background:#ff8c4220; padding:10px; border-radius:15px; margin:10px 0; text-align:center;">
+                                        🎁 <strong>СКИДКА 5% НА ПЕРВЫЙ ЗАКАЗ!</strong> 🎁<br>
+                                        Было: ₽ ${subtotal.toLocaleString()} → К оплате: ₽ ${finalTotal.toLocaleString()}
+                                    </div>`;
+                } else if (firstOrderDiscountUsed && gameDiscountActive) {
+                    finalTotal = subtotal;
+                    discountText = `<div style="background:#ff4d4d20; padding:10px; border-radius:15px; margin:10px 0; text-align:center;">
+                                        🏆 Вы уже использовали игровую скидку! Следующая покупка — без скидки.
+                                    </div>`;
+                }
+                
+                cartDiv.innerHTML = itemsHtml + discountText + `<hr><strong style="font-size:22px;">Итого: ₽ ${finalTotal.toLocaleString()}</strong>
+                              <button id="toPayBtn" style="background:#ff8c42; border:none; padding:12px; border-radius:40px; margin-top:20px; width:100%; font-weight:bold; cursor:pointer;">💳 Перейти к оплате</button>`;
+                
+                window.cartTotalForPayment = finalTotal;
+                
+                document.querySelectorAll('.cart-item-qty-btn').forEach(btn => {
+                    btn.onclick = (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(btn.dataset.id);
+                        const delta = parseInt(btn.dataset.delta);
+                        changeQuantity(id, delta);
+                    };
+                });
+                document.querySelectorAll('.remove-item-btn').forEach(btn => {
+                    btn.onclick = (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(btn.dataset.id);
+                        removeItem(id);
+                    };
+                });
+                
+                const payBtn = document.getElementById("toPayBtn");
+                if (payBtn) payBtn.onclick = () => showPaymentForm();
+            }
+        }
+    }
+    
+    function showPaymentForm() {
+        document.getElementById("cartList").style.display = "none";
+        document.getElementById("paymentArea").style.display = "block";
+    }
+    
+    function hidePaymentForm() {
+        document.getElementById("cartList").style.display = "block";
+        document.getElementById("paymentArea").style.display = "none";
+        updateCartDisplay();
+    }
+    
+    function processPayment() {
+        let cardNum = document.getElementById("cardNum").value.replace(/\s/g, '');
+        let exp = document.getElementById("cardExp").value;
+        let cvv = document.getElementById("cardCvv").value;
+        let cardName = document.getElementById("cardName").value;
+        let userEmail = document.getElementById("userEmail").value;
+        
+        let total = window.cartTotalForPayment || 0;
+        
+        if(cardNum.length < 13) { alert("Ошибка карты"); return; }
+        if(!exp.match(/^\d{2}\/\d{2}$/)) { alert("Формат MM/YY"); return; }
+        if(cvv.length !== 3) { alert("CVV 3 цифры"); return; }
+        if(cardName.length < 3) { alert("Имя держателя"); return; }
+        if(!userEmail || !userEmail.includes('@')) { alert("Введите email"); return; }
+        
+        let message = `✅ ОПЛАТА ${total} ₽ прошла! Чек на ${userEmail}`;
+        if(gameDiscountActive && !firstOrderDiscountUsed) message += "\n🎮 Скидка 15% за игру активирована!";
+        else if(!firstOrderDiscountUsed) message += "\n🎁 Скидка 5% на первый заказ!";
+        alert(message);
+        
+        if(gameDiscountActive) {
+            firstOrderDiscountUsed = true;
+            gameDiscountActive = false;
+        } else {
+            firstOrderDiscountUsed = true;
+        }
+        
+        cart = []; 
+        updateCartDisplay(); 
+        hidePaymentForm(); 
+        document.getElementById("cartModal").style.display = "none";
+    }
+    
+        function renderTeamWithPhotos() {
+        const team = [
+            { name: "Матвей Кислов", role: "Про райдер / Основатель", photo: "https://avatars.mds.yandex.net/i?id=2a0000017a0e99aef68465490efed8c02d0d-4614390-images-thumbs&n=13" },
+            { name: "Иотченко Александр", role: "Капитан команды", photo: "https://avatars.mds.yandex.net/get-entity_search/10844871/1261413825/S600xU_2x" },
+            { name: "Степан Сушков", role: "Парковый райдер", photo: "https://avatars.mds.yandex.net/get-entity_search/5394633/1237504509/S600xU_2x" },
+            { name: "Дмитрий Макарович", role: "Тренер", photo: "https://avatars.mds.yandex.net/get-entity_search/137430/1262209346/S600xU_2x" }
+        ];
+        const container = document.getElementById("teamGrid");
+        if(container) {
+            container.innerHTML = team.map(m => `
+                <div class="team-card">
+                    <img class="team-photo" src="${m.photo}" alt="${m.name}" onerror="this.src='https://placehold.co/180x180/1a1f2e/ff4d4d?text=${m.name.charAt(0)}'">
+                    <div class="team-name">${m.name}</div>
+                    <div class="team-role">${m.role}</div>
+                </div>
+            `).join('');
+        }
+    }
+    
+    function renderTestimonials() {
+        const reviews = [
+            { text: "Лучшие самокаты! Качество на высоте", author: "Алексей" },
+            { text: "Брал TECH TEAM — полный восторг", author: "Данила" },
+            { text: "Запчасти отличные, рекомендую", author: "Матвей К." }
+        ];
+        const slider = document.getElementById("testimonialsSlider");
+        if(slider) slider.innerHTML = reviews.map(r => `<div class="testimonial"><i class="fas fa-quote-right"></i><p>“${r.text}”</p><h4>- ${r.author}</h4></div>`).join('');
+    }
+    
+    function showNotif(msg) {
+        let d = document.createElement('div');
+        d.innerText = msg;
+        d.style.position = 'fixed'; d.style.bottom = '20px'; d.style.right = '20px';
+        d.style.background = '#ff4d4d'; d.style.color = 'white'; d.style.padding = '12px 24px';
+        d.style.borderRadius = '50px'; d.style.zIndex = '9999'; d.style.fontWeight = 'bold';
+        document.body.appendChild(d);
+        setTimeout(() => d.remove(), 2000);
+    }
+    
+    function openGmailWithTemplate() {
+        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=Bella104423315@gmail.com&su=${encodeURIComponent("Вопрос о самокатах NIKKLES")}&body=${encodeURIComponent("Здравствуйте! Меня заинтересовали самокаты...")}`, '_blank');
+    }
+    
+    function openMessengerMAX(phoneNumber) {
+        let cleanPhone = phoneNumber.replace(/[^0-9+]/g, '');
+        if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;
+        window.location.href = `max://send?phone=${encodeURIComponent(cleanPhone)}`;
+        setTimeout(() => window.location.href = `tel:${cleanPhone}`, 1000);
+    }
+    
+    function initPhoneLinks() {
+        document.querySelectorAll('.phone-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                openMessengerMAX(link.textContent.trim());
+            });
+        });
+    }
+    
+    document.getElementById('historyBtn').onclick = () => {
+        window.open('file:///C:/Users/user/Desktop/index66.html', '_blank');
+    };
+    
+    document.getElementById('closeProductModalBtn').onclick = () => {
+        document.getElementById('productModal').style.display = 'none';
+    };
+    document.getElementById('productModalBuyBtn').onclick = () => {
+        if(currentProduct) {
+            addToCart(currentProduct);
+            showNotif(`✅ ${currentProduct.name} добавлен`);
+            document.getElementById('productModal').style.display = 'none';
+        }
+    };
+    window.onclick = (e) => {
+        if(e.target === document.getElementById('productModal')) {
+            document.getElementById('productModal').style.display = 'none';
+        }
+    };
+    
+    function formatCardNumber(value) {
+        let v = value.replace(/\s/g, '').replace(/\D/g, '');
+        if (v.length > 16) v = v.slice(0, 16);
+        let formatted = '';
+        for (let i = 0; i < v.length; i++) {
+            if (i > 0 && i % 4 === 0) formatted += ' ';
+            formatted += v[i];
+        }
+        return formatted;
+    }
+    
+    function formatExpiry(value) {
+        let v = value.replace(/\D/g, '');
+        if (v.length > 4) v = v.slice(0, 4);
+        if (v.length >= 2) {
+            let month = parseInt(v.slice(0, 2));
+            if (month > 12) month = 12;
+            let formattedMonth = month.toString().padStart(2, '0');
+            return formattedMonth + (v.length > 2 ? '/' + v.slice(2, 4) : '');
+        }
+        return v;
+    }
+    
+    document.getElementById('cardNum').addEventListener('input', function(e) {
+        e.target.value = formatCardNumber(e.target.value);
+    });
+    document.getElementById('cardExp').addEventListener('input', function(e) {
+        e.target.value = formatExpiry(e.target.value);
+    });
+    
+    // ---------- ИГРА ----------
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    let gameRunning = false;
+    let score = 0;
+    let animationId = null;
+    let player = { x: 70, y: 230, width: 30, height: 30, vy: 0, grounded: true, jumpPower: -9 };
+    let obstacles = [];
+    let frameCounter = 0;
+    let spawnGap = 55;
+    let gameSpeed = 5;
+    let gravity = 0.5;
+    let canvasWidth = 800;
+    let canvasHeight = 300;
+    let groundY = 250;
+    
+    function resizeCanvas() {
+        const container = canvas.parentElement;
+        const maxWidth = Math.min(800, container.clientWidth);
+        canvas.style.width = `${maxWidth}px`;
+        canvas.width = maxWidth;
+        canvasHeight = 300;
+        groundY = canvasHeight - 50;
+        canvas.height = canvasHeight;
+        player.y = groundY - player.height;
+        if(!gameRunning) drawGame();
+    }
+    window.addEventListener('resize', resizeCanvas);
+    
+    function jump() { if(gameRunning && player.grounded) { player.vy = player.jumpPower; player.grounded = false; } }
+    
+    function updateGame() {
+        if(!gameRunning) return;
+        player.vy += gravity; player.y += player.vy;
+        if(player.y >= groundY - player.height) { player.y = groundY - player.height; player.vy = 0; player.grounded = true; }
+        if(player.y < 0) player.y = 0;
+        for(let i=0; i<obstacles.length; i++) obstacles[i].x -= gameSpeed;
+        obstacles = obstacles.filter(obs => obs.x + obs.width > 0);
+        if(frameCounter >= spawnGap) { frameCounter = 0; let obsW = 20+Math.random()*10; let obsH = 25+Math.random()*10; obstacles.push({ x: canvasWidth, y: groundY - obsH, width: obsW, height: obsH }); }
+        else frameCounter++;
+        for(let i=0; i<obstacles.length; i++) {
+            let obs = obstacles[i];
+            if(player.x < obs.x+obs.width && player.x+player.width > obs.x && player.y < obs.y+obs.height && player.y+player.height > obs.y) {
+                gameRunning = false; document.getElementById('gameStatus').innerHTML = '💀 ИГРА ОКОНЧЕНА!'; if(animationId) cancelAnimationFrame(animationId); drawGame(); return;
+            }
+            if(obs.x+obs.width < player.x && !obs.counted) { obs.counted = true; score++; document.getElementById('gameScore').innerText = score;
+                if(score>=100) {
+                    gameRunning=false; 
+                    gameDiscountActive = true;
+                    document.getElementById('gameStatus').innerHTML = '🏆 ПОБЕДА! ВЫ ПОЛУЧИЛИ СКИДКУ 15%! 🏆';
+                    showNotif('🏆 ПОЗДРАВЛЯЮ! Вы прошли игру и получили СКИДКУ 15% на покупку! 🏆');
+                    if(animationId) cancelAnimationFrame(animationId); drawGame(); 
+                    updateCartDisplay();
+                    return; 
+                }
+            }
+        }
+        drawGame(); animationId = requestAnimationFrame(updateGame);
+    }
+    
+    function drawGame() {
+        if(!ctx) return;
+        ctx.clearRect(0,0,canvasWidth,canvasHeight);
+        ctx.fillStyle='#2a2f3e'; ctx.fillRect(0,groundY,canvasWidth,canvasHeight-groundY);
+        ctx.fillStyle='#ff4d4d'; ctx.fillRect(0,groundY,canvasWidth,3);
+        ctx.fillStyle='#ff8c42';
+        obstacles.forEach(obs=>{ ctx.fillRect(obs.x,obs.y,obs.width,obs.height); ctx.fillStyle='#cc6a2c'; ctx.fillRect(obs.x+3,obs.y-5,obs.width-6,5); ctx.fillStyle='#ff8c42'; });
+        ctx.fillStyle='#ff4d4d'; ctx.fillRect(player.x,player.y,player.width,player.height);
+        ctx.fillStyle='#fff'; ctx.fillRect(player.x+5,player.y+5,player.width-10,8);
+        ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(player.x+player.width-5,player.y+player.height-8,6,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='#ffcc00'; ctx.beginPath(); ctx.arc(player.x+5,player.y+player.height-8,6,0,Math.PI*2); ctx.fill();
+        if(!gameRunning && score<100 && obstacles.length>0) {
+            ctx.font = 'bold 20px Montserrat'; ctx.fillStyle = '#ff4d4d'; ctx.fillText('GAME OVER', canvasWidth/2-70, 50);
+        } else if(!gameRunning && score>=100) {
+            ctx.font = 'bold 18px Montserrat'; ctx.fillStyle = '#ff8c42'; ctx.fillText('СКИДКА 15% АКТИВИРОВАНА!', canvasWidth/2-130, 50);
+        }
+    }
+    
+    function startGame() { if(gameRunning) return; resetGame(); gameRunning=true; document.getElementById('gameStatus').innerHTML='🏃‍♂️ ИГРА ИДЕТ! Цель: 100 очков'; if(animationId) cancelAnimationFrame(animationId); updateGame(); }
+    function resetGame() { gameRunning=false; if(animationId) cancelAnimationFrame(animationId); score=0; obstacles=[]; frameCounter=0; player.y=groundY-player.height; player.vy=0; player.grounded=true; document.getElementById('gameScore').innerText='0'; document.getElementById('gameStatus').innerHTML='🏁 Нажми СТАРТ, чтобы играть!'; drawGame(); }
+    
+    document.getElementById('startGameBtn').onclick = startGame;
+    document.getElementById('restartGameBtn').onclick = () => { resetGame(); startGame(); };
+    document.getElementById('gameTabBtn').onclick = () => { document.getElementById('gameSection').style.display='block'; document.getElementById('gameSection').scrollIntoView({behavior:'smooth'}); resizeCanvas(); drawGame(); };
+    document.addEventListener('keydown', (e) => { if(e.code==='Space') { e.preventDefault(); jump(); } });
+    canvas.addEventListener('click', jump);
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); });
+    
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.onclick = () => {
+            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.section-category').forEach(sec=>sec.classList.remove('active-cat'));
+            document.getElementById(btn.dataset.tab).classList.add('active-cat');
+            document.getElementById('gameSection').style.display='none';
+        };
+    });
+    document.querySelectorAll('.nav-cat').forEach(link => {
+        link.onclick = () => {
+            let cat = link.dataset.cat;
+            if(cat==='scooters') document.querySelector('.tab-btn[data-tab="scooters-tab"]').click();
+            if(cat==='parts') document.querySelector('.tab-btn[data-tab="parts-tab"]').click();
+            if(cat==='team') document.querySelector('.tab-btn[data-tab="team-tab"]').click();
+            document.getElementById('gameSection').style.display='none';
+        };
+    });
+    document.getElementById("heroScootersBtn").onclick = () => document.querySelector('.tab-btn[data-tab="scooters-tab"]').click();
+    document.getElementById("heroPartsBtn").onclick = () => document.querySelector('.tab-btn[data-tab="parts-tab"]').click();
+    document.getElementById("writeEmailBtn").onclick = openGmailWithTemplate;
+    document.getElementById("emailBannerBtn").onclick = openGmailWithTemplate;
+    
+    const modal = document.getElementById("cartModal");
+    document.getElementById("cartBtn").onclick = () => { modal.style.display = "flex"; updateCartDisplay(); hidePaymentForm(); };
+    document.getElementById("closeCartBtn").onclick = () => modal.style.display = "none";
+    document.getElementById("backToCart").onclick = () => hidePaymentForm();
+    document.getElementById("doPayBtn").onclick = () => processPayment();
+    window.onclick = (e) => { if(e.target === modal) modal.style.display = "none"; };
+    
+    renderGrid("nikklesGrid", nikklesScoots);
+    renderGrid("techteamGrid", techTeamScoots);
+    renderGrid("partsGrid", partsList);
+    renderTeamWithPhotos();
+    renderTestimonials();
+    initPhoneLinks();
+    resizeCanvas();
+    drawGame();
+</script>
+</body>
+</html>
